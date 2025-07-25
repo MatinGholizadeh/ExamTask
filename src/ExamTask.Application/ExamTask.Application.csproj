@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExamTask.Domain\ExamTask.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Exams\" />
+    <Folder Include="Features\Groups\" />
+    <Folder Include="Features\Reports\" />
+    <Folder Include="Features\StudentAnswers\" />
+    <Folder Include="Features\Questions\" />
+  </ItemGroup>
+
+</Project>
