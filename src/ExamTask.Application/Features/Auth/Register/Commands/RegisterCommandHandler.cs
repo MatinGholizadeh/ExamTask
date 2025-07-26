@@ -3,14 +3,14 @@ using ExamTask.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using ExamTask.Application.Abstractions.Authentication;
 
-namespace ExamTask.Application.Features.Auth.Register;
+namespace ExamTask.Application.Features.Auth.Register.Commands;
 
 public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
 {
-    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IJwtTokenGenerator _tokenGenerator;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public RegisterCommandHandler(UserManager<ApplicationUser> userManager, IJwtTokenGenerator tokenGenerator)
+    public RegisterCommandHandler(IJwtTokenGenerator tokenGenerator, UserManager<ApplicationUser> userManager)
     {
         _userManager = userManager;
         _tokenGenerator = tokenGenerator;
@@ -20,13 +20,14 @@ public class RegisterCommandHandler : IRequestHandler<RegisterCommand, string>
     {
         var user = new ApplicationUser
         {
-            FullName = request.FullName,
+            FirstName = request.FirstName,
+            LastName = request.LastName,
             Email = request.Email,
-            NationalCode = request.PhoneNumber,
-            UserName = request.Email
+            PhoneNumber = request.PhoneNumber,
+            PasswordHash = request.PasswordHash,
         };
 
-        var result = await _userManager.CreateAsync(user, request.Password);
+        var result = await _userManager.CreateAsync(user, request.PasswordHash);
 
         if (!result.Succeeded)
             throw new Exception(string.Join(" - ", result.Errors.Select(e => e.Description)));

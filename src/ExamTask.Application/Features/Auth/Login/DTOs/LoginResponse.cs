@@ -1,4 +1,4 @@
-﻿namespace ExamTask.Application.Features.Auth.Login;
+﻿namespace ExamTask.Application.Features.Auth.Login.DTOs;
 
 public class LoginResponse
 {

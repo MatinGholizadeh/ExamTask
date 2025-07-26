@@ -1,5 +1,5 @@
-﻿using ExamTask.Application.Features.Auth.Login;
-using ExamTask.Application.Features.Auth.Register;
+﻿using ExamTask.Application.Features.Auth.Login.Commands;
+using ExamTask.Application.Features.Auth.Register.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

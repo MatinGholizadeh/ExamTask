@@ -1,6 +1,7 @@
-﻿using MediatR;
+﻿using ExamTask.Application.Features.Auth.Login.DTOs;
+using MediatR;
 
-namespace ExamTask.Application.Features.Auth.Login;
+namespace ExamTask.Application.Features.Auth.Login.Commands;
 
 public class LoginCommand : IRequest<LoginResponse>
 {

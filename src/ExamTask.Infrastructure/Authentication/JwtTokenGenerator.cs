@@ -28,7 +28,6 @@ public class JwtTokenGenerator : IJwtTokenGenerator
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
             new Claim(ClaimTypes.Name, user.UserName ?? ""),
-            new Claim("FullName", user.FullName),
         };
 
         foreach (var role in roles)

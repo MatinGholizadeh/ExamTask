@@ -4,9 +4,11 @@ public class Exam
 {
     public long Id { get; set; }
     public string Title { get; set; } = string.Empty;
-    public DateTime StartDate { get; set; }
-    public DateTime EndDate { get; set; }
-    public int DurationMinutes { get; set; } // Time limit.
+
+    public DateTime StartDate { get; set; } //Exam access start date.
+    public DateTime EndDate { get; set; } // Access end date.
+
+    public int DurationMinutes { get; set; } // Time allowed after the test starts (e.g. 90 minutes)
 
     // Reference Navigation Properties - ExamGroup
     public long ExamGroupId { get; set; }
