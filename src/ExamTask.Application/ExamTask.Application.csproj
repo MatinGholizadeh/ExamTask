@@ -11,10 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Exams\" />
-    <Folder Include="Features\ExamGroup\" />
-    <Folder Include="Features\Reports\" />
-    <Folder Include="Features\StudentAnswers\" />
+    <Folder Include="Features\ExamGroups\" />
+    <Folder Include="Features\StudentExam\" />
     <Folder Include="Features\Questions\" />
   </ItemGroup>
 

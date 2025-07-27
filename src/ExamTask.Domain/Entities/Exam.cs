@@ -12,7 +12,8 @@ public class Exam
 
     // Reference Navigation Properties - ExamGroup
     public long ExamGroupId { get; set; }
-    public ExamGroup Group { get; set; } = default!;
+    public ExamGroup ExamGroup { get; set; } = default!;
 
-    public ICollection<Question> Questions { get; set; } = default!;
+    public ICollection<Question> Questions { get; set; } = new List<Question>();
+    public ICollection<StudentExam> StudentExams { get; set; } = new List<StudentExam>(); // newly Added!!!!
 }

@@ -1,8 +1,10 @@
 ﻿using ExamTask.Application.Abstractions.Authentication;
+using ExamTask.Application.Abstractions.Persistence.Repositories;
 using ExamTask.Application.Common.Settings;
 using ExamTask.Domain.Identity;
 using ExamTask.Infrastructure.Authentication;
 using ExamTask.Infrastructure.Identity;
+using ExamTask.Infrastructure.Persistence.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +28,11 @@ public static class InfrastructureServiceRegistration
     /// <returns>The updated IServiceCollection.</returns>
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services.AddScoped<IExamRepository, ExamRepository>();
+        services.AddScoped<IQuestionRepository, QuestionRepository>();
+        services.AddScoped<IStudentAnswerRepository, StudentAnswerRepository>();
+        services.AddScoped<IStudentExamRepository, StudentExamRepository>();
+
         // Configure JWT settings
         var jwtSection = configuration.GetSection("JwtSettings");
         services.Configure<JwtSettings>(jwtSection);

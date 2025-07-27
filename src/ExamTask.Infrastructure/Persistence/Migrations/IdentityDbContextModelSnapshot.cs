@@ -22,6 +22,167 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("ExamTask.Domain.Entities.Exam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("ExamGroupId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamGroupId");
+
+                    b.ToTable("Exams");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.ExamGroup", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ExamGroup");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.Question", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("CorrectOption")
+                        .HasColumnType("int");
+
+                    b.Property<long>("ExamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Option1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option3")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Option4")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.ToTable("Questions");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.StudentAnswer", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<int>("ChangeCount")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FirstAnswerOption")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FirstAnsweredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsOutsideAllowedTime")
+                        .HasColumnType("bit");
+
+                    b.Property<int?>("LastAnswerOption")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("LastAnsweredAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("QuestionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("StudentExamId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.HasIndex("StudentExamId");
+
+                    b.ToTable("StudentAnswers");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.StudentExam", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("ExamId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime>("StartedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("SubmittedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ExamId");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("StudentExams");
+                });
+
             modelBuilder.Entity("ExamTask.Domain.Identity.ApplicationUser", b =>
                 {
                     b.Property<long>("Id")
@@ -49,14 +210,16 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -66,7 +229,8 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.Property<string>("NationalCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256)
@@ -86,7 +250,8 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
@@ -244,6 +409,66 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("ExamTask.Domain.Entities.Exam", b =>
+                {
+                    b.HasOne("ExamTask.Domain.Entities.ExamGroup", "ExamGroup")
+                        .WithMany("Exams")
+                        .HasForeignKey("ExamGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExamGroup");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.Question", b =>
+                {
+                    b.HasOne("ExamTask.Domain.Entities.Exam", "Exam")
+                        .WithMany("Questions")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.StudentAnswer", b =>
+                {
+                    b.HasOne("ExamTask.Domain.Entities.Question", "Question")
+                        .WithMany()
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ExamTask.Domain.Entities.StudentExam", "StudentExam")
+                        .WithMany("Answers")
+                        .HasForeignKey("StudentExamId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Question");
+
+                    b.Navigation("StudentExam");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.StudentExam", b =>
+                {
+                    b.HasOne("ExamTask.Domain.Entities.Exam", "Exam")
+                        .WithMany("StudentExams")
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ExamTask.Domain.Identity.ApplicationUser", "Student")
+                        .WithMany("StudentExams")
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Exam");
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<long>", null)
@@ -293,6 +518,28 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.Exam", b =>
+                {
+                    b.Navigation("Questions");
+
+                    b.Navigation("StudentExams");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.ExamGroup", b =>
+                {
+                    b.Navigation("Exams");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Entities.StudentExam", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("ExamTask.Domain.Identity.ApplicationUser", b =>
+                {
+                    b.Navigation("StudentExams");
                 });
 #pragma warning restore 612, 618
         }

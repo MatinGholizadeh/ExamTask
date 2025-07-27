@@ -1,11 +1,15 @@
-﻿using System.Text;
-using System.Security.Claims;
+﻿using ExamTask.Application.Abstractions.Authentication;
+using ExamTask.Application.Common.Settings;
+using ExamTask.Application.Features.Auth.Login.Commands;
+using ExamTask.Application.Features.Auth.Login.DTOs;
 using ExamTask.Domain.Identity;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
-using ExamTask.Application.Common.Settings;
-using ExamTask.Application.Abstractions.Authentication;
+using System.Security.Claims;
+using System.Text;
 
 namespace ExamTask.Infrastructure.Authentication;
 
@@ -26,23 +30,24 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-            new Claim(ClaimTypes.Name, user.UserName ?? ""),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
+            new Claim(ClaimTypes.Name, user.UserName ?? string.Empty)
         };
 
-        foreach (var role in roles)
-            claims.Add(new Claim(ClaimTypes.Role, role));
+        // Add roles to claims
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Secret));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var token = new JwtSecurityToken(
+        var tokenDescriptor = new JwtSecurityToken(
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
             expires: DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
-            signingCredentials: creds);
+            signingCredentials: credentials
+        );
 
-        return new JwtSecurityTokenHandler().WriteToken(token);
+        return new JwtSecurityTokenHandler().WriteToken(tokenDescriptor);
     }
 }

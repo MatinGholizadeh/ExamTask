@@ -22,8 +22,4 @@
     <ProjectReference Include="..\ExamTask.Domain\ExamTask.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Persistence\" />
-  </ItemGroup>
-
 </Project>

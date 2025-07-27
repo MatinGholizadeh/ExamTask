@@ -1,4 +1,5 @@
-﻿using ExamTask.Domain.Identity;
+﻿using ExamTask.Domain.Entities;
+using ExamTask.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -13,5 +14,18 @@ public class IdentityDbContext : IdentityDbContext<ApplicationUser, IdentityRole
     public IdentityDbContext(DbContextOptions<IdentityDbContext> options)
         : base(options)
     {
+    }
+
+    public DbSet<Exam> Exams { get; set; }
+    public DbSet<Question> Questions { get; set; }
+    public DbSet<StudentAnswer> StudentAnswers { get; set; }
+    public DbSet<StudentExam> StudentExams { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Apply all configurations from the current assembly
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(IdentityDbContext).Assembly);
     }
 }
