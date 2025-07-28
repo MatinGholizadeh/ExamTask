@@ -1,0 +1,44 @@
+﻿@page
+@model ExamTask.Presentation.Pages.LoginModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Login";
+    var selectedRole = Model.Role;
+    if (string.IsNullOrEmpty(selectedRole))
+    {
+        selectedRole = "student";
+    }
+    var isStudent = selectedRole == "student";
+    var isTeacher = selectedRole == "teacher";
+}
+
+<link href="~/css/authStyle.css" rel="stylesheet" />
+
+<div class="d-flex justify-content-center top-margin" style="min-height: 100vh;">
+    <div style="width: 400px;">
+        <!-- Tabs -->
+        <div class="role-tabs">
+            <a asp-page="/Login" asp-route-role="student" class="@(isStudent ? "active" : "inactive")">Student</a>
+            <a asp-page="/Login" asp-route-role="teacher" class="@(isTeacher ? "active" : "inactive")">Teacher</a>
+        </div>
+
+        <!-- Form -->
+        <div class="login-container shadow" id="form-container">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <input type="hidden" name="Role" value="@(isStudent ? "Student" : "Teacher")" />
+                <button type="submit" class="btn btn-primary mt-3">Login as @(isStudent ? "Student" : "Teacher")</button>
+            </form>
+        </div>
+    </div>
+</div>

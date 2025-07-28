@@ -1,0 +1,87 @@
+﻿@page
+@model ExamTask.Presentation.Pages.RegisterModel
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Register";
+    var selectedRole = Model.Role;
+    if (string.IsNullOrEmpty(selectedRole))
+    {
+        selectedRole = "student";
+    }
+    var isStudent = selectedRole == "student";
+    var isTeacher = selectedRole == "teacher";
+}
+
+<link href="~/css/authStyle.css" rel="stylesheet" />
+
+<div class="d-flex justify-content-center top-margin" style="min-height: 100vh;">
+    <div style="width: 400px;">
+        <!-- Tabs -->
+        <div class="role-tabs">
+            <a asp-page="/Register" asp-route-role="student" class="@(isStudent ? "active" : "inactive")">Student</a>
+            <a asp-page="/Register" asp-route-role="teacher" class="@(isTeacher ? "active" : "inactive")">Teacher</a>
+        </div>
+
+        <!-- Form -->
+        <div class="login-container shadow" id="form-container">
+            <form method="post">
+                <div class="form-group row">
+                    <!-- First Name -->
+                    <div class="col">
+                        <label asp-for="Input.FirstName"></label>
+                        <input asp-for="Input.FirstName" class="form-control" />
+                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                    </div>
+
+                    <!-- Last Name -->
+                    <div class="col">
+                        <label asp-for="Input.LastName"></label>
+                        <input asp-for="Input.LastName" class="form-control" />
+                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <!-- National Code -->
+                <div class="form-group">
+                    <label asp-for="Input.NationalCode"></label>
+                    <input asp-for="Input.NationalCode" class="form-control" />
+                    <span asp-validation-for="Input.NationalCode" class="text-danger"></span>
+                </div>
+
+                <!-- Phone Number -->
+                <div class="form-group">
+                    <label asp-for="Input.PhoneNumber"></label>
+                    <input asp-for="Input.PhoneNumber" class="form-control" />
+                    <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+                </div>
+
+                <!-- Email -->
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="form-group">
+                    <label asp-for="Input.ConfirmPassword"></label>
+                    <input asp-for="Input.ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                </div>
+
+                <!-- Hidden Role Field -->
+                <input type="hidden" name="Role" value="@(isStudent ? "Student" : "Teacher")" />
+
+                <button type="submit" class="btn btn-primary mt-3">Register as @(isStudent ? "Student" : "Teacher")</button>
+            </form>
+        </div>
+    </div>
+</div>

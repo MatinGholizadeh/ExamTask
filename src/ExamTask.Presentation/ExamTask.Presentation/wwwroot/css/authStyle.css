@@ -1,0 +1,63 @@
+﻿.role-tabs {
+    display: flex;
+    margin-bottom: -1px;
+    position: relative;
+    z-index: 1;
+}
+
+    .role-tabs a {
+        flex: 1;
+        text-align: center;
+        padding: 10px 20px;
+        font-weight: bold;
+        text-decoration: none;
+        border: 1px solid #ccc;
+        border-bottom: none;
+        background-color: #f8f9fa;
+        color: #000;
+        border-radius: 0.5rem 0.5rem 0 0;
+        transition: background-color 0.3s, box-shadow 0.3s, color 0.3s;
+        box-shadow: inset 0 3px 5px rgba(255, 255, 255, 0.8); /* حالت بیرون زده (برجسته) پیش‌فرض */
+    }
+
+        /* دکمه فعال به شکل فرم معمولی، روی سطح */
+        .role-tabs a.active {
+            background-color: #fff;
+            box-shadow: none; /* روی سطح */
+            color: #007bff;
+            border-bottom: 1px solid #fff;
+        }
+
+        /* دکمه غیر فعال به شکل تو رفته و خاکستری */
+        .role-tabs a.inactive {
+            background-color: #e9ecef; /* خاکستری روشن */
+            color: #6c757d; /* خاکستری تیره‌تر برای متن */
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.1); /* حالت تو رفتگی */
+            cursor: pointer;
+        }
+
+        /* اگر بخواهی موس روی دکمه فعال یک تغییر بده */
+        .role-tabs a.active:hover {
+            background-color: #e9ecef;
+            color: #0056b3;
+            box-shadow: none;
+        }
+
+.login-container {
+    border: 1px solid #ccc;
+    border-radius: 0 0 0.5rem 0.5rem;
+    padding: 30px;
+    background-color: #fff;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    width: 100%;
+}
+
+.top-margin {
+    margin-top: 150px;
+}
