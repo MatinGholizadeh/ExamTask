@@ -1,7 +1,6 @@
-﻿using ExamTask.Application.Abstractions.Persistence.Repositories;
-using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
+﻿using FluentValidation;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ExamTask.Application.DependencyInjection;
 

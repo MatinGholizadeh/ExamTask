@@ -1,7 +1,7 @@
-﻿using ExamTask.Application.Abstractions.Persistence.Repositories;
-using ExamTask.Domain.Entities;
-using ExamTask.Infrastructure.Identity;
+﻿using ExamTask.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using ExamTask.Infrastructure.Identity;
+using ExamTask.Application.Abstractions.Persistence.Repositories;
 
 namespace ExamTask.Infrastructure.Persistence.Repositories;
 
