@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html dir="rtl" lang="en">
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,29 +13,24 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between w-100">
-                    <!-- قسمت راست: "Home" و "Privacy" -->
-                    <ul class="navbar-nav flex-row ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">خانه</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">حریم خصوصی</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">درباره ما</a>
-                        </li>
-                    </ul>
-
-                    <!-- قسمت وسط: "آزمون 4 گزینه ای" -->
-                    <a class="navbar-brand mx-auto position-absolute" style="left: 50%; transform: translateX(-50%);" asp-area="" asp-page="/Index">آزمون 4 گزینه ای</a>
-
                     <!-- قسمت چپ: "ورود" و "ثبت نام" -->
                     <ul class="navbar-nav flex-row-reverse">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">ورود</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Register">ثبت نام</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Register">ثبت نام</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">ورود</a>
+                        </li>
+                    </ul>
+                    <!-- قسمت وسط: "آزمون 4 گزینه ای" -->
+                    <a class="navbar-brand mx-auto position-absolute" style="left: 50%; transform: translateX(-50%);" asp-area="" asp-page="/Index">آزمون 4 گزینه ای</a>
+                    <!-- قسمت راست: "Home" و "Privacy" -->
+                    <ul class="navbar-nav flex-row ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">درباره ما</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">خانه</a>
                         </li>
                     </ul>
                 </div>

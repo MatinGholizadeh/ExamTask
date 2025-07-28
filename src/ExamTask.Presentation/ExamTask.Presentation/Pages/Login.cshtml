@@ -19,8 +19,8 @@
     <div style="width: 400px;">
         <!-- Tabs -->
         <div class="role-tabs">
-            <a asp-page="/Login" asp-route-role="student" class="@(isStudent ? "active" : "inactive")">Student</a>
             <a asp-page="/Login" asp-route-role="teacher" class="@(isTeacher ? "active" : "inactive")">Teacher</a>
+            <a asp-page="/Login" asp-route-role="student" class="@(isStudent ? "active" : "inactive")">Student</a>
         </div>
 
         <!-- Form -->

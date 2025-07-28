@@ -1,4 +1,7 @@
-﻿.role-tabs {
+﻿.body{
+    direction: rtl;
+}
+.role-tabs {
     display: flex;
     margin-bottom: -1px;
     position: relative;
@@ -60,4 +63,9 @@
 
 .top-margin {
     margin-top: 150px;
+}
+
+.text-danger {
+    direction: rtl; /* تراز راست */
+    text-align: right; /* متن را از راست به چپ نمایش می‌دهد */
 }
