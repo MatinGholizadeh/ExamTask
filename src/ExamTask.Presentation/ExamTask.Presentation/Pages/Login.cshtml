@@ -26,17 +26,32 @@
         <!-- Form -->
         <div class="login-container shadow" id="form-container">
             <form method="post">
+                <!-- Display error message if any -->
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+
+                <!-- Email input -->
                 <div class="form-group">
                     <label asp-for="Input.Email"></label>
                     <input asp-for="Input.Email" class="form-control" />
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
+
+                <!-- Password input -->
                 <div class="form-group">
                     <label asp-for="Input.Password"></label>
                     <input asp-for="Input.Password" class="form-control" />
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+
+                <!-- Hidden Role Field -->
                 <input type="hidden" name="Role" value="@(isStudent ? "Student" : "Teacher")" />
+
+                <!-- Submit Button -->
                 <button type="submit" class="btn btn-primary mt-3">Login as @(isStudent ? "Student" : "Teacher")</button>
             </form>
         </div>

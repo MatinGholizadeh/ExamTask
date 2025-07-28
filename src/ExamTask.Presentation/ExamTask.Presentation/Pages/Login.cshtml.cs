@@ -1,4 +1,4 @@
-using ExamTask.Domain.Identity;
+﻿using ExamTask.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,8 +14,6 @@ public class LoginModel : PageModel
     [BindProperty]
     public LoginInputModel Input { get; set; } = new();
     public string? Role { get; set; }
-    public string? ErrorMessage { get; set; }
-    public string? WelcomeMessage { get; set; }  // Welcome message to show
 
     // Inject SignInManager and UserManager
     public LoginModel(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
@@ -36,31 +34,40 @@ public class LoginModel : PageModel
             return Page();
         }
 
-        // Authenticate the user
+        // Find user by email
         var user = await _userManager.FindByEmailAsync(Input.Email);
+
+        // If user doesn't exist or password is incorrect
         if (user == null || !(await _userManager.CheckPasswordAsync(user, Input.Password)))
         {
-            ErrorMessage = "Invalid credentials.";
-            return Page();
+            TempData["ErrorMessage"] = "Incorrect username or password.";
+            return RedirectToPage(); // Redirect to the same page to display the error
         }
 
-        // Sign in the user
-        var result = await _signInManager.PasswordSignInAsync(user, Input.Password, false, false);
+        // Check if the user role matches the selected role (either Teacher or Student)
+        if (Role == "teacher" && !await _userManager.IsInRoleAsync(user, "Teacher"))
+        {
+            TempData["ErrorMessage"] = "Incorrect username or password.";
+            return RedirectToPage();
+        }
 
+        if (Role == "student" && !await _userManager.IsInRoleAsync(user, "Student"))
+        {
+            TempData["ErrorMessage"] = "Incorrect username or password.";
+            return RedirectToPage();
+        }
+
+        // Sign in the user if everything is correct
+        var result = await _signInManager.PasswordSignInAsync(user, Input.Password, false, false);
         if (result.Succeeded)
         {
-            // Generate the welcome message
-            WelcomeMessage = $"Welcome {user.FirstName}!";
+            TempData["SuccessMessage"] = $"{user.FirstName} ورود شما با موفقیت انجام شد!";
+            return RedirectToPage("/Index"); // Redirect to the home page
+        }
 
-            // Redirect to home page with success message
-            TempData["SuccessMessage"] = $"Welcome back, {user.FirstName}!";
-            return RedirectToPage("/Index");
-        }
-        else
-        {
-            ErrorMessage = "Login failed. Please try again.";
-            return Page();
-        }
+        // If sign-in failed, add a generic error message
+        TempData["ErrorMessage"] = "Login failed. Please try again.";
+        return RedirectToPage();
     }
 
     public class LoginInputModel
