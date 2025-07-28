@@ -1,7 +1,17 @@
 ﻿@page
-@model IndexModel
+@model ExamTask.Presentation.Pages.IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    // Get success message from TempData
+    var successMessage = TempData["SuccessMessage"];
+}
+
+<!-- Display success message if it exists -->
+@if (successMessage != null)
+{
+    <div class="alert alert-success">
+        @successMessage
+    </div>
 }
 
 <div class="text-center">

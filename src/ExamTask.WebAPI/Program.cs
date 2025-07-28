@@ -48,21 +48,6 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 
-// Seed Roles
-using (var scope = app.Services.CreateScope())
-{
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole<long>>>();
-
-    string[] roles = { "Student", "Teacher", "Admin" };
-
-    foreach (var role in roles)
-    {
-        if (!await roleManager.RoleExistsAsync(role))
-        {
-            await roleManager.CreateAsync(new IdentityRole<long>(role));
-        }
-    }
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

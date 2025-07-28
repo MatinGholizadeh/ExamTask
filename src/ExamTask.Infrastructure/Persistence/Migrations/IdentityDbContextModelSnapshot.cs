@@ -51,7 +51,7 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ExamGroupId");
 
-                    b.ToTable("Exams");
+                    b.ToTable("Exams", (string)null);
                 });
 
             modelBuilder.Entity("ExamTask.Domain.Entities.ExamGroup", b =>
@@ -69,7 +69,7 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ExamGroup");
+                    b.ToTable("ExamGroup", (string)null);
                 });
 
             modelBuilder.Entity("ExamTask.Domain.Entities.Question", b =>
@@ -110,7 +110,7 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("ExamId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("ExamTask.Domain.Entities.StudentAnswer", b =>
@@ -151,7 +151,7 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StudentExamId");
 
-                    b.ToTable("StudentAnswers");
+                    b.ToTable("StudentAnswers", (string)null);
                 });
 
             modelBuilder.Entity("ExamTask.Domain.Entities.StudentExam", b =>
@@ -180,7 +180,7 @@ namespace ExamTask.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentExams");
+                    b.ToTable("StudentExams", (string)null);
                 });
 
             modelBuilder.Entity("ExamTask.Domain.Identity.ApplicationUser", b =>
