@@ -2,15 +2,22 @@
 @model ExamTask.Presentation.Pages.IndexModel
 
 @{
-    // Get success message from TempData
-    var successMessage = TempData["SuccessMessage"];
+    ViewData["Title"] = "Home page";
+    var successMessage = TempData["SuccessMessage"] as string;
+    var errorMessage = TempData["ErrorMessage"] as string;
 }
 
-<!-- Display success message if it exists -->
-@if (successMessage != null)
+@if (!string.IsNullOrEmpty(successMessage))
 {
     <div class="alert alert-success" dir="rtl">
         @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger" dir="rtl">
+        @errorMessage
     </div>
 }
 

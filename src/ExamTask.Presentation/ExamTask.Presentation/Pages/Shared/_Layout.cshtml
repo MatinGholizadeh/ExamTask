@@ -1,9 +1,14 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@using ExamTask.Domain.Identity
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<!DOCTYPE html>
+<html lang="fa">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ExamTask.Presentation</title>
+    <title>@ViewData["Title"] - آزمون 4 گزینه ای</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ExamTask.Presentation.styles.css" asp-append-version="true" />
@@ -13,18 +18,23 @@
         <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between w-100">
-                    <!-- قسمت چپ: "ورود" و "ثبت نام" -->
-                    <ul class="navbar-nav flex-row-reverse">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Register">ثبت نام</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Login">ورود</a>
-                        </li>
-                    </ul>
-                    <!-- قسمت وسط: "آزمون 4 گزینه ای" -->
+                    <!-- If the user is not signed in, show Login and Register -->
+                    @if (!SignInManager.IsSignedIn(User)) // If the user is not signed in
+                    {
+                        <ul class="navbar-nav flex-row-reverse">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Register">ثبت نام</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Login">ورود</a>
+                            </li>
+                        </ul>
+                    }
+
+                    <!-- Middle part: "آزمون 4 گزینه ای" -->
                     <a class="navbar-brand mx-auto position-absolute" style="left: 50%; transform: translateX(-50%);" asp-area="" asp-page="/Index">آزمون 4 گزینه ای</a>
-                    <!-- قسمت راست: "Home" و "Privacy" -->
+
+                    <!-- Right part: "Home" and "Privacy" -->
                     <ul class="navbar-nav flex-row ml-auto">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-page="/AboutUs">درباره ما</a>
@@ -33,10 +43,27 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">خانه</a>
                         </li>
                     </ul>
+
+                    <!-- Hamburger menu for signed-in users -->
+                    @if (SignInManager.IsSignedIn(User)) // If the user is signed in
+                    {
+                        <ul class="navbar-nav flex-row ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/User/Details">اطلاعات کاربر</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Exams">آزمون‌های من</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Logout">خروج</a>
+                            </li>
+                        </ul>
+                    }
                 </div>
             </div>
         </nav>
     </header>
+
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

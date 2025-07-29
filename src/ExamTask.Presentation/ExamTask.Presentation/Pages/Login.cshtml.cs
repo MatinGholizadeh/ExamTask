@@ -24,6 +24,7 @@ public class LoginModel : PageModel
 
     public void OnGet()
     {
+        // Get the role from the query string if provided
         Role = Request.Query["role"].ToString().ToLower();
     }
 
@@ -31,7 +32,7 @@ public class LoginModel : PageModel
     {
         if (!ModelState.IsValid)
         {
-            return Page();
+            return Page(); // Return the page if the model is not valid
         }
 
         // Find user by email
@@ -40,36 +41,38 @@ public class LoginModel : PageModel
         // If user doesn't exist or password is incorrect
         if (user == null || !(await _userManager.CheckPasswordAsync(user, Input.Password)))
         {
-            TempData["ErrorMessage"] = "Incorrect username or password.";
-            return RedirectToPage(); // Redirect to the same page to display the error
+            TempData["ErrorMessage"] = "ایمیل یا پسورد شما صحیح نمی‌باشد."; // Display error message
+            return RedirectToPage(); // Redirect back to login page
         }
 
         // Check if the user role matches the selected role (either Teacher or Student)
         if (Role == "teacher" && !await _userManager.IsInRoleAsync(user, "Teacher"))
         {
-            TempData["ErrorMessage"] = "Incorrect username or password.";
+            TempData["ErrorMessage"] = "کاربر معلم نمی‌باشد."; // Error message for wrong role
             return RedirectToPage();
         }
 
         if (Role == "student" && !await _userManager.IsInRoleAsync(user, "Student"))
         {
-            TempData["ErrorMessage"] = "Incorrect username or password.";
+            TempData["ErrorMessage"] = "کاربر دانش‌آموز نمی‌باشد."; // Error message for wrong role
             return RedirectToPage();
         }
 
         // Sign in the user if everything is correct
-        var result = await _signInManager.PasswordSignInAsync(user, Input.Password, false, false);
+        var result = await _signInManager.PasswordSignInAsync(user, Input.Password, isPersistent: false, lockoutOnFailure: false);
         if (result.Succeeded)
         {
+            // Set success message and redirect to homepage
             TempData["SuccessMessage"] = $"{user.FirstName} ورود شما با موفقیت انجام شد!";
             return RedirectToPage("/Index"); // Redirect to the home page
         }
 
         // If sign-in failed, add a generic error message
-        TempData["ErrorMessage"] = "Login failed. Please try again.";
+        TempData["ErrorMessage"] = "ورود ناموفق بود. لطفاً دوباره تلاش کنید.";
         return RedirectToPage();
     }
 
+    // Input Model for Login
     public class LoginInputModel
     {
         [Required]
